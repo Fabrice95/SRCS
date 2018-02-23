@@ -13,33 +13,27 @@ public class TeeWriter extends FilterWriter {
 	}
 	
 	@Override
-	public void write(int c){
-		try {
-			super.write(c);
-			writer.write(c);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-//		try {
-//			if(Character.isLetter(c)){
-//				super.write(c);
-//				writer.write(c);
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+	public void write(int c) throws IOException {
+		super.write(c);
+		super.flush();
+		writer.write(c);
+		writer.flush();
 	}
 
 	@Override
 	public void write(char[] cbuf, int off, int len) throws IOException {
 		super.write(cbuf, off, len);
+		//super.flush();
+		writer.write(cbuf, off, len);
+		//writer.flush();
 	}
 
 	@Override
 	public void write(String str, int off, int len) throws IOException {
-		// TODO Auto-generated method stub
 		super.write(str, off, len);
+		//super.flush();
+		writer.write(str, off, len);
+		//writer.flush();
 	}
 	
 	

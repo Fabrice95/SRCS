@@ -1,7 +1,9 @@
 package srcs.tme1;
 
-public class CatTest {
+public class test {
+
 	public static void main(String[] args) {
-		Fonctions.clavierVersEcranTee();
+		System.out.println(-2%26);
 	}
+	
 }

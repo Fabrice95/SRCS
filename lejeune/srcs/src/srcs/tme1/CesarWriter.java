@@ -9,28 +9,21 @@ public class CesarWriter extends FilterWriter {
 	
 	public CesarWriter(Writer writer, int decalage) {
 		super(writer);
-		this.decalage = decalage; 
+		this.decalage = (decalage < 0)? 26 + (decalage%26) : decalage%26;
 	}
 	
 	@Override
 	public void write(int c){
 		try {
 			if(Character.isLetter(c)){
-				int a,z;
+				int a;
 				a = (Character.isUpperCase(c))?'A':'a';
 				
-				//premiere methode
-				z = (Character.isUpperCase(c))?'Z':'z';
-				
-				if(c+decalage > z)
-					c = a + ((c + decalage) - z - 1 );
-				else
-					c+=decalage;
-				
 				//deuxieme methode
-				c = ((c - a + decalage)%26)+a;
-				super.write(c);
+				 c = ((c - a + decalage)%26)+a;
 			}
+			super.write(c);
+			super.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
