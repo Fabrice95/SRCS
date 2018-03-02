@@ -35,6 +35,7 @@ public class ServeurMultiThread {
 					e.printStackTrace();
 				}
 			}
+//			s.close();
 		} catch (IOException e) {
 			System.out.println("ERROR: creation of ServerSocket");
 			e.printStackTrace();

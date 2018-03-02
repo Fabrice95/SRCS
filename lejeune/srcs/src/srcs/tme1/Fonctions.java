@@ -8,6 +8,10 @@ import java.io.Reader;
 import java.io.Writer;
 
 public class Fonctions {
+	public static void sourceVersDestination(Reader source, Writer destination) {
+		Cat.cat(source, destination);
+	}
+	
 	public static void clavierVersEcran() {
 		Reader isr = new InputStreamReader(System.in);
 		Writer osw = new OutputStreamWriter(System.out);

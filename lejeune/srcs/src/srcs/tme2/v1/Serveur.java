@@ -8,7 +8,6 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import srcs.tme1.CesarWriter;
 import srcs.tme1.Fonctions;
 import srcs.tme2.base.GlobalConstants;
 
