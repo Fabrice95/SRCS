@@ -44,7 +44,7 @@ main (int argc, char *argv[])
 	int operand1, operand2, result;
 
 	if (argc < 4) {
-		printf ("usage: %s server_host\n", argv[0]);
+		printf ("usage: %s server_host operand1 operand2\n", argv[0]);
 		exit (1);
 	}
 	host = argv[1];
