@@ -1,0 +1,9 @@
+1) exporter les binaires, dans la variable:
+export CLASSPATH=$HOME/srcs/lejeune/srcs/bin
+
+2) lancer le rmiregistry de la meme version de java compilee
+/usr/lib/jvm/jdk1.8.0_45/jre/bin/rmiregistry
+
+3) lancer les programmes
+
+

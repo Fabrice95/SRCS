@@ -1,12 +1,9 @@
 package srcs.tme2.test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import junit.framework.TestCase;
 
-import org.junit.jupiter.api.Test;
+class TestTme2 extends TestCase {
 
-class TestTme2{
-
-	@Test
 	void test() {
 		fail("Not yet implemented");
 	}
