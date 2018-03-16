@@ -1,5 +1,4 @@
 #			Systemes Repartis Client Serveur
-#				Makefile pour TP 2
 
 
 # Documentation: http://www.gnu.org/software/make/manual/make.html
@@ -10,7 +9,7 @@ BIN=$(DIR)/bin/
 SRC=$(DIR)/src/
 
 .SUFFIXES:
-.PHONY: all clean test test-Serveur test-Client test-ServeurV1 test-ClientV1 test-Serveur-Client
+.PHONY: all clean test test-Serveur test-Client test-ServeurV1 test-ClientV1 test-Serveur-Client test-Serveur_rmi test-Client_rmi
 all: $(BIN)srcs/tme2/base/Serveur.class $(BIN)srcs/tme2/base/Client.class $(BIN)srcs/tme2/v1/Serveur.class $(BIN)srcs/tme2/v1/Client.class
 
 test: test-Serveur test-Client test-ServeurV1 test-ClientV1
@@ -29,6 +28,36 @@ test-ServeurV1: $(BIN)srcs/tme2/v1/Serveur.class
 test-ClientV1: $(BIN)srcs/tme2/v1/Client.class
 	-javac $(SRC)srcs/tme2/v1/Client.java -d $(BIN) -classpath $(BIN)
 	-cd $(BIN) && java srcs.tme2.v1.Client
+
+
+#####			TME 3
+
+test-Serveur_http_get: $(BIN)srcs/tme3/ProcessRequestGet.class
+	-javac $(SRC)srcs/tme3/ProcessRequestGet.java -d $(BIN) -classpath $(BIN)
+	-java -classpath $(BIN) srcs.tme3.ProcessRequestGet
+
+test-Serveur_http_get_put: $(BIN)srcs/tme3/ProcessRequestGetPut.class
+	-javac $(SRC)srcs/tme3/ProcessRequestGetPut.java -d $(BIN) -classpath $(BIN)
+	-java -classpath $(BIN) srcs.tme3.ProcessRequestGetPut
+
+test-Client_http_put: $(BIN)srcs/tme3/ClientPut.class
+	-javac $(SRC)srcs/tme3/ClientPut.java -d $(BIN) -classpath $(BIN)
+	-java -classpath $(BIN) srcs.tme3.ClientPut
+
+
+#####			TME 5
+
+test-Serveur_rmi: $(BIN)srcs/tme5/ServerMain.class
+	-javac $(SRC)srcs/tme5/ServerMain.java -d $(BIN) -classpath $(BIN)
+	-java -classpath $(BIN) srcs.tme5.ServerMain
+
+test-Client_rmi: $(BIN)srcs/tme5/ClientMain.class
+	-javac $(SRC)srcs/tme5/ClientMain.java -d $(BIN) -classpath $(BIN)
+	-java -classpath $(BIN) srcs.tme5.ClientMain
+
+
+
+#############################################################################################
 
 
 test-Serveur-Client: $(BIN)srcs/tme2/base/Serveur.class $(BIN)srcs/tme2/base/Client.class

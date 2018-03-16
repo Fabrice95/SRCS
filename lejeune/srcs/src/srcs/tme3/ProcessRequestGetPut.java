@@ -13,37 +13,59 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.Socket;
 
-public class ProcessRequestGet extends RequestExecutor {
+import srcs.tme1.Fonctions;
 
-	public ProcessRequestGet(Socket socket) {
+public class ProcessRequestGetPut extends RequestExecutor {
+	
+	
+	private enum RequestType {GET, PUT, OTHER};
+	
+	public ProcessRequestGetPut(Socket socket) {
 		super(socket);
 	}
 
 	@Override
 	public void run() {
+		System.out.println("demarrage");
 		Reader reader;
 		Writer writer;
 
 		try {
 			reader = new InputStreamReader(new DataInputStream(getSocket().getInputStream()));
-//			int c;
+
 			String line;
 			String[] lineTable;
-			boolean get = false;
+			boolean content = false;
+			
+			RequestType method = RequestType.OTHER;
 			String resource = "/index.html";
+			File file;
 
 			BufferedReader br = new BufferedReader(reader);
 			writer = new FileWriter("tme3-exo3");
 			try {
 				while (((line = br.readLine()) != null) && (line.length() != 0)) {
-					writer.write(line + "\n");
-					writer.flush();
+					if(line.equals("\r\n")) {
+						content = true;
+					}
+					if (content) {
+						writer.write(line + "\n");
+						writer.flush();
+					}
 					lineTable = line.split(" ");
-					if(lineTable[0].equals("GET")) {
-						get = true;
+					switch(lineTable[0]) {
+					case "GET":
+						method = RequestType.GET;
 						resource = lineTable[1];
 						if(resource.equals("/"))
 							resource = "/index.html";
+						break;
+					case "PUT":
+						method = RequestType.PUT;
+						resource = lineTable[1];
+						if(resource.equals("/"))
+							resource = "/ajout.txt";
+						break;
 					}
 				}
 			} catch (IOException e) {
@@ -52,11 +74,12 @@ public class ProcessRequestGet extends RequestExecutor {
 				writer.close();	
 			}
 			
-//			DataOutputStream dos = new DataOutputStream(getSocket().getOutputStream());
+
 			BufferedWriter dos = new BufferedWriter(new OutputStreamWriter(getSocket().getOutputStream()));
-//			if (requestType.toUpperCase().equals("GET")) {
-			if (get) {
-				File file = new File(System.getProperty("user.dir")+resource);
+			switch (method) {
+			case GET:
+				file = new File(System.getProperty("user.dir")+resource);
+				
 				if(file.isFile()) {
 					dos.write("HTTP/1.1 200 OK\r\n");
 					dos.write("\r\n");
@@ -74,13 +97,31 @@ public class ProcessRequestGet extends RequestExecutor {
 					dos.write("\r\n");
 				}
 				
-			} else {
+				break;
+			case PUT:
+				file = new File(System.getProperty("user.dir")+resource);
+				if(!file.exists()) {
+					file.createNewFile();
+					dos.write("HTTP/1.1 201 Created\r\n");
+					dos.write("\r\n");
+				}else {
+					Reader r = new FileReader("tme3-exo3");
+					Writer w = new FileWriter(file);
+					Fonctions.sourceVersDestination(r, w);
+					dos.write("HTTP/1.1 200 OK\r\n");
+					dos.write("\r\n");
+					r.close();
+				}
+				break;
+			default:
 				dos.write("400 Bad Request\r\n");
 				dos.write("\r\n");
 			}
+			
 			dos.flush();
 			dos.close();
 			getSocket().close();
+			
 		} catch (IOException e) {
 			System.out.println("ERROR: IOError");
 			e.printStackTrace();
