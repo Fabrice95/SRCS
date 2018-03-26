@@ -7,11 +7,28 @@
 	et cie pour passer les args au programme
 
 Ex 1:
+1)
+Fichier add.x:
+struct operands {
+	int operand1;
+	int operand2;
+};
+
+program ADDITION {
+	version ADDITION_V1 {
+		int ADD(operands) = 0;
+	} = 1;
+} = 0x20000001;
+
+2)
+Compilation: rpcgen -a add.x
+-> Makefile.add, add.h, add_server.c, add_client.c, add_clnt.c, add_xdr.c, add_svc
+
 3)
-add.h 			: définition de la structure, et cie
+add.h 		: définition de la structure, et cie
 add_server.c	: définition fonction métier du serveur, code du serveur
 add_client.c	: définition de l'appel distant, code du client
-add_svc			: ne pas éditer, car généré par rpcgen, pour lancer le serveur
+add_svc		: ne pas éditer, car généré par rpcgen, pour lancer le serveur
 add_clnt.c	: fonctions utilitaires
 add_xdr.c	: fonctions utilitaires
 
