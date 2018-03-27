@@ -3,6 +3,7 @@ package srcs.tme5.param;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 public class ServerMain {
 
@@ -11,7 +12,7 @@ public class ServerMain {
 			Annuaire a = new AnnuaireImpl();
 			a.addEntry(new Personne("A", "Aprenom", "0123456789", "adr1"));
 			a.addEntry(new Personne("B", "Bprenom", "9876543210", "adr2"));
-//			UnicastRemoteObject.exportObject(a, 4242);
+//			UnicastRemoteObject.exportObject(a, 0);
 			
 			Registry registry = LocateRegistry.getRegistry("localhost");
 			registry.rebind("Annuaire", a);
@@ -23,5 +24,4 @@ public class ServerMain {
 //			e1.printStackTrace();
 //		}
 	}
-
 }

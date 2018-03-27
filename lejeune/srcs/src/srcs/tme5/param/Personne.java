@@ -1,8 +1,9 @@
 package srcs.tme5.param;
 
 import java.io.Serializable;
+import java.rmi.Remote;
 
-public class Personne implements Serializable {
+public class Personne implements Remote {
 	/**
 	 * 
 	 */
